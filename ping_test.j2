@@ -1,0 +1,17 @@
+#################
+REACHABLE units:
+{% for host in groups['ping_test'] -%}
+{% if hostvars[host]['ansible_all_ipv4_addresses'] is defined -%}
+{{newline_character}}- {{ host }} is pingable
+{%- endif %}
+{%- endfor %}
+
+#################
+UNREACHABLE units:
+{% for host in groups['ping_test'] -%}
+{% if hostvars[host]['ansible_all_ipv4_addresses'] is not defined -%}
+{{newline_character}}- {{ host }} is NOT pingable
+{%- endif %}
+{%- endfor %}
+
+#################

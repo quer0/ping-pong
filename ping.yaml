@@ -1,0 +1,22 @@
+---
+- hosts: ping_test
+  gather_facts: true
+  tasks:
+
+- hosts: localhost
+  gather_facts: false
+  vars:
+    newline_character: "\n"
+  tasks:
+  - name: print all
+    debug:
+      var: hostvars['{{item}}']['ansible_all_ipv4_addresses']
+    with_items: "{{ groups['ping_test'] }}"
+
+  - name: process template
+    template:
+      src: /etc/ansible/ping_output/ping_test.j2 
+      dest: /tmp/ping_test
+
+
+#zmienic src na nowy katalog
